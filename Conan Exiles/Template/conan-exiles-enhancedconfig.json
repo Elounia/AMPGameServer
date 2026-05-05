@@ -67,7 +67,7 @@
         "IsFlagArgument": false,
         "ParamFieldName": "ServerName",
         "IncludeInCommandLine": true,
-        "DefaultValue": "Conan Exiles Enhanced Server - Powered by AMP",
+        "DefaultValue": "Conan Exiles Enhanced (Elounia) Server - Powered by AMP",
         "EnumValues": {}
     },
     {
