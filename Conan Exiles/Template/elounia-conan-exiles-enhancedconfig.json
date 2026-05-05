@@ -225,7 +225,7 @@
         "IsFlagArgument": false,
         "ParamFieldName": "ModList",
         "DefaultValue": "",
-        "Special": "listfile:./conan-exiles-enhanced/443030/ConanSandbox/Mods/modlist.txt",
+        "Special": "listfile:./elounia-conan-exiles-enhanced/443030/ConanSandbox/Mods/modlist.txt",
         "EnumValues": {}
     }
 ]

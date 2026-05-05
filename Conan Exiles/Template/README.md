@@ -15,7 +15,7 @@ The template intentionally uses the Steam `public` branch. Do not set `UpdateSou
 - Downloads the current Enhanced dedicated server from Steam app `443030`.
 - Uses the native Linux server on Linux hosts instead of Wine.
 - Uses the native Windows server on Windows hosts.
-- Keeps server files under `./conan-exiles-enhanced/443030/` so it does not overlap with existing Legacy instances.
+- Keeps server files under `./elounia-conan-exiles-enhanced/443030/` so it does not overlap with existing Legacy instances.
 - Uses the current Steam Store Enhanced header image for the AMP app/instance cover.
 
 ## AMP Repository Use
@@ -28,7 +28,7 @@ For the easiest local install on the Linux machine that hosts AMP, run this from
 bash "Conan Exiles/scripts/linux-install-conan-exiles-enhanced-amp.sh"
 ```
 
-That script copies the template directly into AMP's ADS deployment template cache, validates it, backs up any previous local `conan-exiles-enhanced*` files, and restarts ADS so the app appears in the Create Instance dropdown.
+That script copies the template directly into AMP's ADS deployment template cache, validates it, backs up any previous local `elounia-conan-exiles-enhanced*` files, and restarts ADS so the app appears in the Create Instance dropdown.
 
 ## Elounia Port Defaults
 
@@ -46,11 +46,11 @@ Forward `30002` TCP/UDP, `30003` UDP, and `30004` UDP in the router to make the 
 For an AMP configuration repository instead, publish the contents of this directory at the repository root:
 
 - `manifest.json`
-- `conan-exiles-enhanced.kvp`
-- `conan-exiles-enhancedconfig.json`
-- `conan-exiles-enhancedmetaconfig.json`
-- `conan-exiles-enhancedports.json`
-- `conan-exiles-enhancedupdates.json`
+- `elounia-conan-exiles-enhanced.kvp`
+- `elounia-conan-exiles-enhancedconfig.json`
+- `elounia-conan-exiles-enhancedmetaconfig.json`
+- `elounia-conan-exiles-enhancedports.json`
+- `elounia-conan-exiles-enhancedupdates.json`
 
 Then add that repository in AMP:
 

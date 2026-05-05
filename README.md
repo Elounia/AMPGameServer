@@ -28,7 +28,7 @@ The installer:
 
 - finds the local AMP ADS deployment template cache;
 - copies only the Conan Exiles Enhancen (Elounia) template files;
-- backs up any previous local `conan-exiles-enhanced*` files before replacing them;
+- backs up any previous local `elounia-conan-exiles-enhanced*` files before replacing them;
 - validates the template JSON and Windows/Linux launch paths;
 - commits the local AMP template-cache change when that cache is a git repository;
 - restarts ADS so `Conan Exiles Enhancen (Elounia)` appears in the Create Instance dropdown.

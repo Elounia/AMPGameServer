@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-APP_ID="conan-exiles-enhanced"
+APP_ID="elounia-conan-exiles-enhanced"
 APP_NAME="Conan Exiles Enhancen (Elounia)"
+LEGACY_LOCAL_APP_ID="conan-exiles-enhanced"
 DEFAULT_INSTANCES_ROOT="/home/amp/.ampdata/instances"
 DEFAULT_CACHE_SUFFIX="Plugins/ADSModule/DeploymentTemplates/CubeCoders-AMPTemplates-main"
 
@@ -23,8 +24,9 @@ Options:
   --dry-run              Validate source files and print the detected target without copying.
   -h, --help             Show this help.
 
-The script only installs conan-exiles-enhanced template files. It does not delete
-existing AMP instances, datastores, saves, or Legacy Conan Exiles configuration.
+The script installs elounia-conan-exiles-enhanced template files. It does not
+delete existing AMP instances, datastores, saves, or Legacy Conan Exiles
+configuration.
 USAGE
 }
 
@@ -99,6 +101,14 @@ TEMPLATE_FILES=(
   "$APP_ID"metaconfig.json
   "$APP_ID"ports.json
   "$APP_ID"updates.json
+)
+
+LEGACY_LOCAL_FILES=(
+  "$LEGACY_LOCAL_APP_ID.kvp"
+  "$LEGACY_LOCAL_APP_ID"config.json
+  "$LEGACY_LOCAL_APP_ID"metaconfig.json
+  "$LEGACY_LOCAL_APP_ID"ports.json
+  "$LEGACY_LOCAL_APP_ID"updates.json
 )
 
 validate_source() {
@@ -204,6 +214,53 @@ run_as_owner() {
   fi
 }
 
+restore_official_conan_template_if_overwritten() {
+  local owner_user="$1"
+  local owner_group="$2"
+  local backup_root="$3"
+  local timestamp="$4"
+
+  [[ -f "$LEGACY_LOCAL_APP_ID.kvp" ]] || return 0
+  if ! grep -q 'Elounia' "$LEGACY_LOCAL_APP_ID.kvp"; then
+    return 0
+  fi
+
+  local legacy_backup_dir="$backup_root/$LEGACY_LOCAL_APP_ID-overwritten-by-elounia/$timestamp"
+  install -d -o "$owner_user" -g "$owner_group" -m 0755 "$legacy_backup_dir"
+
+  for file in "${LEGACY_LOCAL_FILES[@]}"; do
+    if [[ -f "$file" ]]; then
+      install -o "$owner_user" -g "$owner_group" -m 0644 "$file" "$legacy_backup_dir/$file"
+    fi
+  done
+
+  log "Found older Elounia template using CubeCoders' official conan-exiles-enhanced file names."
+
+  local restored=0
+  if [[ -d .git ]] && command -v git >/dev/null 2>&1; then
+    run_as_owner "$owner_user" git fetch origin main >/dev/null 2>&1 || true
+    local tmp_file
+    for file in "${LEGACY_LOCAL_FILES[@]}"; do
+      if run_as_owner "$owner_user" git cat-file -e "origin/main:$file" 2>/dev/null; then
+        tmp_file="$(mktemp)"
+        run_as_owner "$owner_user" git show "origin/main:$file" > "$tmp_file"
+        install -o "$owner_user" -g "$owner_group" -m 0644 "$tmp_file" "$file"
+        rm -f "$tmp_file"
+        restored=1
+      fi
+    done
+  fi
+
+  if [[ $restored -eq 1 ]]; then
+    log "Restored CubeCoders' official conan-exiles-enhanced files from the AMP template repository."
+  else
+    rm -f "${LEGACY_LOCAL_FILES[@]}"
+    log "Moved old Elounia conan-exiles-enhanced files out of the way. Refresh ADS templates to restore CubeCoders' official template."
+  fi
+
+  log "Old local file backup: $legacy_backup_dir"
+}
+
 restart_ads() {
   local owner_user="$1"
   local instance_name="$2"
@@ -261,12 +318,14 @@ done
 
 cd "$TEMPLATE_CACHE"
 
+restore_official_conan_template_if_overwritten "$OWNER_USER" "$OWNER_GROUP" "$BACKUP_ROOT" "$TIMESTAMP"
+
 validate_template_set "$TEMPLATE_CACHE"
 
 if [[ $COMMIT -eq 1 && -d .git ]] && command -v git >/dev/null 2>&1; then
   run_as_owner "$OWNER_USER" git config user.name "AMP Local Template Installer"
   run_as_owner "$OWNER_USER" git config user.email "amp-local@example.invalid"
-  run_as_owner "$OWNER_USER" git add "${TEMPLATE_FILES[@]}"
+  run_as_owner "$OWNER_USER" git add "${TEMPLATE_FILES[@]}" "${LEGACY_LOCAL_FILES[@]}"
   if ! run_as_owner "$OWNER_USER" git diff --cached --quiet; then
     run_as_owner "$OWNER_USER" git commit -m "Install Conan Exiles Enhancen Elounia template"
   else

@@ -12,7 +12,7 @@
         "UpdateStageName": "Config Directory Creation",
         "UpdateSourcePlatform": "Windows",
         "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "./conan-exiles-enhanced/443030/ConanSandbox/Saved/Config/WindowsServer",
+        "UpdateSourceArgs": "./elounia-conan-exiles-enhanced/443030/ConanSandbox/Saved/Config/WindowsServer",
         "OverwriteExistingFiles": false,
         "SkipOnFailure": false
     },
@@ -20,7 +20,7 @@
         "UpdateStageName": "Config Directory Creation",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "CreateDirectory",
-        "UpdateSourceArgs": "./conan-exiles-enhanced/443030/ConanSandbox/Saved/Config/LinuxServer",
+        "UpdateSourceArgs": "./elounia-conan-exiles-enhanced/443030/ConanSandbox/Saved/Config/LinuxServer",
         "OverwriteExistingFiles": false,
         "SkipOnFailure": false
     },
