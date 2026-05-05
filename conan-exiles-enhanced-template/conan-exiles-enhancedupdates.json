@@ -1,0 +1,34 @@
+[
+    {
+        "UpdateStageName": "SteamCMD and Conan Exiles Enhanced Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "SteamCMD",
+        "UpdateSourceData": "443030",
+        "UpdateSourceArgs": "440900",
+        "UpdateSourceVersion": "public",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Config Directory Creation",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "./conan-exiles-enhanced/443030/ConanSandbox/Saved/Config/WindowsServer",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Config Directory Creation",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "CreateDirectory",
+        "UpdateSourceArgs": "./conan-exiles-enhanced/443030/ConanSandbox/Saved/Config/LinuxServer",
+        "OverwriteExistingFiles": false,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Make Linux Server Executable",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "SetExecutableFlag",
+        "UpdateSourceArgs": "{{$FullBaseDir}}ConanSandbox/Binaries/Linux/ConanSandboxServer-Linux-Shipping",
+        "SkipOnFailure": false
+    }
+]
