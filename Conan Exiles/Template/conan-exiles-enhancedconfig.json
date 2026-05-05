@@ -137,7 +137,7 @@
         "DisplayName": "Admin Password",
         "Category": "Conan Exiles Enhanced:stadia_controller",
         "Subcategory": "Server:dns:1",
-        "Description": "To allow use of the in-game admin panel, set the admin password in ConanSandbox/Saved/Config/LinuxServer/ServerSettings.ini.",
+        "Description": "To allow use of the in-game admin panel, set the admin password in ConanSandbox/Saved/Config/<WindowsServer or LinuxServer>/ServerSettings.ini.",
         "Keywords": "admin,password",
         "FieldName": "AdminPassword",
         "InputType": "hidden",
