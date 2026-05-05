@@ -1,15 +1,15 @@
 [
     {
         "Protocol": "Both",
-        "Port": 7777,
+        "Port": 30002,
         "Ref": "ApplicationPort1",
         "Name": "Game and Mods Port",
         "Description": "Port for game traffic and client mod downloads",
         "ChildPorts": [
             {
                 "Protocol": "UDP",
-                "Port": 7778,
-                "Offset": 1,
+                "Port": 30004,
+                "Offset": 2,
                 "Ref": "ApplicationPort2",
                 "Name": "Pinger Port",
                 "Description": "Port for pinger traffic from server browser to determine availability"
@@ -18,14 +18,14 @@
     },
     {
         "Protocol": "UDP",
-        "Port": 27015,
+        "Port": 30003,
         "Ref": "ApplicationPort3",
         "Name": "Query Port",
         "Description": "Port for query traffic"
     },
     {
         "Protocol": "TCP",
-        "Port": 25575,
+        "Port": 30005,
         "Ref": "RemoteAdminPort",
         "Name": "RCON Port",
         "Description": "Port for RCON traffic"

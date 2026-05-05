@@ -1,2 +1,10 @@
 # VS Code workspace configuration
 AMP.code-workspace
+
+# Local AMP exports/backups. Do not publish machine-specific AMP caches.
+AMPSettingsBackup/
+AMPBack/
+
+# One-off local maintenance scripts.
+Conan Exiles/scripts/fix_amp_git_templates.sh
+Conan Exiles/scripts/update_templates.sh

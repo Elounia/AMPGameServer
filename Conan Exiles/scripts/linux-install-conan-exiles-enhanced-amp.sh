@@ -2,16 +2,16 @@
 set -euo pipefail
 
 APP_ID="conan-exiles-enhanced"
-APP_NAME="Conan Exiles Enhanced"
+APP_NAME="Conan Exiles Enhancen (Elounia)"
 DEFAULT_INSTANCES_ROOT="/home/amp/.ampdata/instances"
 DEFAULT_CACHE_SUFFIX="Plugins/ADSModule/DeploymentTemplates/CubeCoders-AMPTemplates-main"
 
 usage() {
   cat <<'USAGE'
-Install the Conan Exiles Enhanced AMP template into a local AMP ADS template cache.
+Install the Conan Exiles Enhancen (Elounia) AMP template into a local AMP ADS template cache.
 
 Usage:
-  bash scripts/install-conan-exiles-enhanced-amp.sh [options]
+  bash "Conan Exiles/scripts/linux-install-conan-exiles-enhanced-amp.sh" [options]
 
 Options:
   --instances-root PATH   AMP instances root. Default: /home/amp/.ampdata/instances
@@ -38,8 +38,8 @@ die() {
 }
 
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
-REPO_ROOT="$(cd -- "$SCRIPT_DIR/.." && pwd)"
-TEMPLATE_DIR="$REPO_ROOT/Conan Exiles/Template"
+CONAN_ROOT="$(cd -- "$SCRIPT_DIR/.." && pwd)"
+TEMPLATE_DIR="$CONAN_ROOT/Template"
 INSTANCES_ROOT="$DEFAULT_INSTANCES_ROOT"
 ADS_INSTANCE=""
 TEMPLATE_CACHE=""
@@ -131,8 +131,13 @@ validate_template_set() {
   fi
 
   grep -qx 'Meta.OS=Windows, Linux' "$template_set_dir/$APP_ID.kvp" || die "Template is not marked for Windows and Linux"
+  grep -qx "Meta.DisplayName=$APP_NAME" "$template_set_dir/$APP_ID.kvp" || die "Template display name is not $APP_NAME"
   grep -q 'ConanSandboxServer-Win64-Shipping.exe' "$template_set_dir/$APP_ID.kvp" || die "Windows executable path is missing"
   grep -q 'ConanSandboxServer-Linux-Shipping' "$template_set_dir/$APP_ID.kvp" || die "Linux executable path is missing"
+  grep -q '"Port": 30002' "$template_set_dir/$APP_ID"ports.json || die "Game port default must be 30002"
+  grep -q '"Port": 30003' "$template_set_dir/$APP_ID"ports.json || die "Query port default must be 30003"
+  grep -q '"Port": 30004' "$template_set_dir/$APP_ID"ports.json || die "Pinger port default must be 30004 to avoid the query port"
+  grep -q '"Port": 30005' "$template_set_dir/$APP_ID"ports.json || die "RCON port default must be 30005"
   if grep -q 'ForceDownloadPlatform' "$template_set_dir/$APP_ID"updates.json; then
     die "Update manifest must not force a single Steam platform"
   fi
@@ -263,7 +268,7 @@ if [[ $COMMIT -eq 1 && -d .git ]] && command -v git >/dev/null 2>&1; then
   run_as_owner "$OWNER_USER" git config user.email "amp-local@example.invalid"
   run_as_owner "$OWNER_USER" git add "${TEMPLATE_FILES[@]}"
   if ! run_as_owner "$OWNER_USER" git diff --cached --quiet; then
-    run_as_owner "$OWNER_USER" git commit -m "Install Conan Exiles Enhanced template"
+    run_as_owner "$OWNER_USER" git commit -m "Install Conan Exiles Enhancen Elounia template"
   else
     log "No template-cache git changes to commit."
   fi
