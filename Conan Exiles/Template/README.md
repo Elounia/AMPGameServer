@@ -20,7 +20,17 @@ The template intentionally uses the Steam `public` branch. Do not set `UpdateSou
 
 ## AMP Repository Use
 
-This repository keeps the template under `Conan Exiles/Template/` for project organization. For an AMP configuration repository, publish the contents of this directory at the repository root:
+This repository keeps the template under `Conan Exiles/Template/` for project organization.
+
+For the easiest local install on the Linux machine that hosts AMP, run this from the repository root:
+
+```bash
+bash scripts/install-conan-exiles-enhanced-amp.sh
+```
+
+That script copies the template directly into AMP's ADS deployment template cache, validates it, backs up any previous local `conan-exiles-enhanced*` files, and restarts ADS so the app appears in the Create Instance dropdown.
+
+For an AMP configuration repository instead, publish the contents of this directory at the repository root:
 
 - `manifest.json`
 - `conan-exiles-enhanced.kvp`
@@ -50,6 +60,8 @@ YourUser/amp-community-templates:main
 After adding or updating the repository, refresh deployment templates or restart ADS, then create a new instance from `Conan Exiles Enhanced`.
 
 For a pull request to CubeCoders' upstream `AMPTemplates` repository, keep these same files at the top level of the submitted template repo layout. Do not include local install scripts, absolute AMP paths, or machine-specific instance names.
+
+Important: AMP's configuration repository loader expects template files at the repository root. This repository stores the files in `Conan Exiles/Template/`, so use the installer script for this repository directly, or publish this directory's contents as a separate root-level AMP template repository.
 
 ## Notes For Maintainers
 
